@@ -1,2 +1,41 @@
-<h1>Books#show</h1>
-<p>Find me in app/views/books/show.html.erb</p>
+<div class="container px-5 px-sm-0">
+  <div class="row">
+    <div class="col-md-3">
+      <h2>User Info</h2>
+      <table class="table">
+        <tr>
+          <td colspan="2">
+            <% if @book.user.profile_image.attached? %>
+              <%= image_tag url_for(@book.user.profile_image), class: "img-thumbnail", size: "150x150" %>
+            <% else %>
+              <%= image_tag "default-image.jpg", class: "img-thumbnail", size: "150x150" %>
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <th>name</th>
+          <td><%= @book.user.name %></td>
+        </tr>
+        <tr>
+          <th>introduction</th>
+          <td><%= @book.user.introduction %></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="col-md-8 offset-md-1">
+      <h2>Book Info</h2>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= @book.title %></h5>
+          <p class="card-text"><%= @book.body %></p>
+
+          <% if current_user == @book.user %>
+            <%= link_to "Edit", edit_book_path(@book), class: "btn btn-outline-secondary btn-sm" %>
+            <%= link_to "Delete", book_path(@book), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-sm" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
