@@ -4,23 +4,63 @@
       <h2>User info</h2>
       <table class='table'>
         <tr>
-          <%= image_tag 'default-image.jpg' %>
+          <td colspan="2">
+            <% if @user.profile_image.attached? %>
+              <%= image_tag url_for(@user.profile_image), class: "img-thumbnail", size: "150x150" %>
+            <% else %>
+              <%= image_tag 'default-image.jpg', class: "img-thumbnail", size:"150x150" %>
+            <% end %>
+          </td>
         </tr>
         <tr>
           <th>name</th>
-          <th></th>
+          <th><%= @user.name %></th>
         </tr>
         <tr>
           <th>introduction</th>
-          <th></th>
+          <th><%= @user.introduction %></th>
         </tr>
       </table>
-      <div class='row'>
-      </div>
+      <% if current_user == @user %>
+        <div class='row'>
+          <div class="col">
+            <%= link_to edit_user_path(@user), class: "btn btn-outline-primary btn-sm" do %>
+              <i class="fa-solid fa-pen-to-square"></i>Edit Profile 
+            <% end %>
+          </div>
+        </div>
+      <% end %>
       <h2 class='mt-3'>New book</h2>
+        <%= form_with model: @book, url: books_path, local: true do |f| %>
+          <div class="form-group">
+            <%= f.label :title %>
+            <%= f.text_field :title, class: "form-control" %>
+          </div>
+
+          <div class= "form-group">
+            <%= f.label :body, "Opinion" %>
+            <%= f.text_area :body, class: "form-control" %>
+          </div>
+
+          <div class="form-group mt-2">
+            <%= f.submit "Create Book", class: "btn btn-success btn-sm" %>
+          </div>
+        <% end %>
     </div>
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
+      <% @user.books.each do |f| %>
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title"><%= link_to book.title, book_path(book) %></h5>
+            <p class="card-text"><%= book.body %></p>
+            <% if current_user == book.user %>
+              <%= link_to "Edit", edit_book_path(book), class: "btn btn-sm btn-outline-secondary" %>
+              <%= link_to "Delete", book_path(book), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-sm btn-outline-danger" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
       <table class='table table-hover table-inverse'>
         <thead>
           <tr>
