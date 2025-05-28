@@ -21,7 +21,8 @@ class BooksController < ApplicationController
     else 
       flash.now[:alert] = "There was an error creating the book."
       @user = current_user
-      render 'users/show'
+      @books = Book.all
+      render :index
     end 
   end
 
@@ -30,6 +31,13 @@ class BooksController < ApplicationController
   end
 
   def update
+    @book = Book.find(params[:id])
+    if @book.update(book_params)
+      flash[:notice] = "Book was successfully updated."
+      redirect_to book_path(@book)
+    else
+      render :edit
+    end
   end
 
   def destroy

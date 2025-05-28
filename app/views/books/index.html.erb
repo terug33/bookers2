@@ -1,6 +1,16 @@
 <p id="notice"></p>
 <div class="container px-5 px-sm-0">
   <div class="row">
+  <% if @book && @book.errors.any? %>
+  <div class="alert alert-danger">
+    <h4>error</h4>
+    <ul>
+      <% @book.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+  <% end %>
     <%= render 'shared/sidebar', user: @user,book:@book %>
 
     <div class="col-md-8 offset-md-1">

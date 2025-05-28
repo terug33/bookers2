@@ -4,6 +4,16 @@
     <div class="col-sm-12 col-md-8 col-lg-5 px-sm-0 mx-auto">
       <h1>Editing Book</h1>
 
+      <% if @book.errors.any? %>
+      <div class="alert alert-danger">
+      <h4>error</h4>
+      <ul>
+        <% @book.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+      </div>
+      <% end %>
       <%= form_with(model: @book, local: true) do |f| %>
         <div class="form-group">
           <%= f.label :title %>
@@ -20,6 +30,7 @@
         </div>
       <% end %>
       <%= link_to 'Show', book_path(@book), class: "btn btn-outline-secondary mt-3" %>
+      <%= link_to 'Back', books_path, class: "btn btn-outline-secondary mt-2 ms-2" %>
     </div>
   </div>
 </div>
