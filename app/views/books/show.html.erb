@@ -1,27 +1,6 @@
 <div class="container px-5 px-sm-0">
   <div class="row">
-    <div class="col-md-3">
-      <h2>User Info</h2>
-      <table class="table">
-        <tr>
-          <td colspan="2">
-            <% if @book.user.profile_image.attached? %>
-              <%= image_tag url_for(@book.user.profile_image), class: "img-thumbnail", size: "150x150" %>
-            <% else %>
-              <%= image_tag "default-image.jpg", class: "img-thumbnail", size: "150x150" %>
-            <% end %>
-          </td>
-        </tr>
-        <tr>
-          <th>name</th>
-          <td><%= @book.user.name %></td>
-        </tr>
-        <tr>
-          <th>introduction</th>
-          <td><%= @book.user.introduction %></td>
-        </tr>
-      </table>
-    </div>
+    <%= render 'shared/sidebar', user: @book.user %>
 
     <div class="col-md-8 offset-md-1">
       <h2>Book Info</h2>
