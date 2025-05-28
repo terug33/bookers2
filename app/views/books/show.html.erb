@@ -3,18 +3,41 @@
     <%= render 'shared/sidebar', user: @book.user %>
 
     <div class="col-md-8 offset-md-1">
-      <h2>Book Info</h2>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title"><%= @book.title %></h5>
-          <p class="card-text"><%= @book.body %></p>
+      <h2>Book detail</h2>
+      <table class="table">
+      <tbody>
+      <tr>
+      <td>
+        <!-- 左側：ユーザー画像 -->
+        <div class= "me-3">
+          <% if @book.user.profile_image.attached? %>
+            <%= image_tag url_for(@book.user.profile_image), class: "img-thumbnail", size: "100x100" %>
+          <% else %>
+            <%= image_tag 'default-image.jpg', class: "img-thumbnail", size: "100x100" %>
+          <% end %>
+          <p class= "mt-2 text-center mb-0"><%= @book.user.name %></p>
+        </div>
+      </td>
+        
+        <!-- 右側：本の内容 -->
+        <td>
+            <%= link_to @book.title, book_path(@book), class: "text-decoration-none" %>
+        </td>
+        <td>
+          <p class="mb-0 me-4"><%= @book.body %></p>
+        </td>
 
           <% if current_user == @book.user %>
-            <%= link_to "Edit", edit_book_path(@book), class: "btn btn-outline-secondary btn-sm" %>
-            <%= link_to "Delete", book_path(@book), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-sm" %>
+          <td>            
+            <%= link_to "Edit", edit_book_path(@book), class: "btn btn-outline-secondary btn-sm me-3" %>
+          </td>
+          <td>
+            <%= link_to "Delete", book_path(@book), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-outline-danger btn-sm me-3" %>            
+          </td>
           <% end %>
-        </div>
-      </div>
+        </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
