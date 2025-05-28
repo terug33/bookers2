@@ -3,29 +3,37 @@
     <%= render 'shared/sidebar' %>
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
-      <% @user.books.each do |book| %>
-        <div class="card mb-3">
-          <div class="card-body">
-            <h5 class="card-title"><%= link_to book.title, book_path(book) %></h5>
-            <p class="card-text"><%= book.body %></p>
-            <% if current_user == book.user %>
-              <%= link_to "Edit", edit_book_path(book), class: "btn btn-sm btn-outline-secondary" %>
-              <%= link_to "Delete", book_path(book), method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-sm btn-outline-danger" %>
-            <% end %>
-          </div>
-        </div>
-      <% end %>
       <table class='table table-hover table-inverse'>
         <thead>
           <tr>
             <th></th>
             <th>Title</th>
             <th>Opinion</th>
-            <th>colspan="3"</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
+      <% @user.books.each do |book| %>
+        <div class="media mb-4">
+    <!-- 左側：画像のみ -->
+    <div class="mr-3">
+      <% if book.user.profile_image.attached? %>
+        <%= image_tag url_for(book.user.profile_image), class: "img-thumbnail", size: "64x64" %>
+      <% else %>
+        <%= image_tag 'default-image.jpg', class: "img-thumbnail", size: "64x64" %>
+      <% end %>
+    </div>
+
+    <!-- 右側：タイトルと本文 -->
+    <div class="media-body">
+      <h5 class="mt-0">
+        <%= link_to book.title, book_path(book), class: "text-decoration-none" %>
+      </h5>
+      <p><%= book.body %></p>
+    </div>
+  </div>
+<% end %>
+      
     </div>
   </div>
 </div>
