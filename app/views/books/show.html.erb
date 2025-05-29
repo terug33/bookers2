@@ -10,10 +10,12 @@
       <td>
         <!-- 左側：ユーザー画像 -->
         <div class= "me-3">
-          <% if @book.user.profile_image.attached? %>
-            <%= image_tag url_for(@book.user.profile_image), class: "img-thumbnail", size: "100x100" %>
-          <% else %>
-            <%= image_tag 'default-image.jpg', class: "img-thumbnail", size: "100x100" %>
+          <%= link_to user_path(@book.user) do %>
+            <% if @book.user.profile_image.attached? %>
+              <%= image_tag url_for(@book.user.profile_image), class: "img-thumbnail", size: "100x100" %>
+            <% else %>
+              <%= image_tag 'default-image.jpg', class: "img-thumbnail", size: "100x100" %>
+            <% end %>
           <% end %>
           <p class= "mt-2 text-center mb-0">
             <%= link_to @book.user.name,user_path(@book.user), class: "text-decoration-none" %>
