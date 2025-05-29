@@ -280,7 +280,7 @@ describe '[STEP3] 仕上げのテスト' do
           expect(current_path).to eq '/users/' + other_user.id.to_s
         end
         it '投稿一覧のユーザ画像のリンク先が正しい', spec_category: "基本的なアソシエーション概念と適切な変数設定" do
-          puts page.body
+          # puts page.body
           expect(page).to have_link '', href: user_path(other_user)
         end
         it '投稿一覧に他人の投稿のtitleが表示され、リンクが正しい', spec_category: "基本的なアソシエーション概念と適切な変数設定" do
